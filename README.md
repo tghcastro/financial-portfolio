@@ -12,14 +12,21 @@ This system is under development and its main purpose is to serve as learning to
 
 PORT: 8080
 
+````shell
+# Starting Application
+./gradlew :portfolio-service:bootRun
+curl http://localhost:8080/actuator/health
+````
+
 #### Stocks Service
 
 PORT: 8081
 
-```shell
+````shell
 # Starting Application
 ./gradlew :stocks-service:bootRun
-```
+curl http://localhost:8081/actuator/health
+````
 
 ## Test Strategy
 

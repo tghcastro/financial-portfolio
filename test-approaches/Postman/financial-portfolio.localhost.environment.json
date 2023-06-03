@@ -3,6 +3,12 @@
 	"name": "Financial Portfolio",
 	"values": [
 		{
+			"key": "portfolio-service",
+			"value": "http://localhost:8080",
+			"type": "default",
+			"enabled": true
+		},
+		{
 			"key": "stocks-service",
 			"value": "http://localhost:8081",
 			"type": "default",
@@ -10,6 +16,6 @@
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2023-06-03T15:43:01.831Z",
+	"_postman_exported_at": "2023-06-03T18:53:41.361Z",
 	"_postman_exported_using": "Postman/10.13.5"
 }

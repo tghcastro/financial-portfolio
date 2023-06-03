@@ -10,6 +10,24 @@
 			"name": "stocks-service",
 			"item": [
 				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{stocks-service}}/actuator/health",
+							"host": [
+								"{{stocks-service}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create",
 					"request": {
 						"method": "POST",
@@ -143,6 +161,29 @@
 							"path": [
 								"stocks",
 								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "portfolio-service",
+			"item": [
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{stocks-service}}/actuator/health",
+							"host": [
+								"{{stocks-service}}"
+							],
+							"path": [
+								"actuator",
+								"health"
 							]
 						}
 					},
