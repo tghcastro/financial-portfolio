@@ -1,10 +1,10 @@
-package com.tghcastro.stocksmodule;
+package com.tghcastro.financialportfolio.stocksservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StocksModuleApplicationTests {
+class StocksServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

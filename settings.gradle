@@ -1,0 +1,3 @@
+rootProject.name = 'financial-portfolio'
+include 'stocks-service'
+include 'portfolio-service'

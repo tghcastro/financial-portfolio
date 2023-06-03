@@ -1,13 +1,13 @@
-package com.tghcastro.stocksmodule;
+package com.tghcastro.financialportfolio.portfolioservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StocksModuleApplication {
+public class PortfolioServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StocksModuleApplication.class, args);
+		SpringApplication.run(PortfolioServiceApplication.class, args);
 	}
 
 }
