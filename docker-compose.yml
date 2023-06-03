@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  base-service-configurations: &base-service-configurations
+    build:
+      context: .
+    image: financial-portfolio
+    networks:
+      - financial_portfolio_network
+
+  portfolio-service:
+    <<: *base-service-configurations
+    container_name: portfolio-service
+    ports:
+      - "8080:8080"
+    command: dockerize -wait tcp://rabbitmq:5672 -timeout 60s ./gradlew :portfolio-service:bootRun
+
+  stocks-service:
+    <<: *base-service-configurations
+    container_name: stocks-service
+    ports:
+      - "8081:8081"
+    command: dockerize -wait tcp://rabbitmq:5672 -timeout 60s ./gradlew :stocks-service:bootRun
+    depends_on:
+      - rabbitmq
+
+  financial-portfolio:
+    image: financial-portfolio
+    container_name: financial-portfolio
+    depends_on:
+      - portfolio-service
+      - stocks-service
+
+### DEPENDENCIES
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - financial_portfolio_network
+
+networks:
+  financial_portfolio_network:

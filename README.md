@@ -28,6 +28,20 @@ PORT: 8081
 curl http://localhost:8081/actuator/health
 ````
 
+#### Docker
+
+````shell
+# Docker
+docker-compose build # Build financial-portfolio images
+
+docker-compose up financial-portfolio # Starting all services
+
+docker-compose down -v # Stop environment
+
+# Useful Commands
+docker run -it --entrypoint /bin/sh -t financial-portfolio
+````
+
 ## Test Strategy
 
 This project contains different test approaches for learning purposes. They are:
