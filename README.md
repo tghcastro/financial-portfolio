@@ -9,3 +9,10 @@ This system is under development and its main purpose is to serve as learning to
 ## Test Strategy
 
 To be defined
+
+## References:
+
+### Spring: 
+
+- https://spring.io/guides/tutorials/rest/
+
