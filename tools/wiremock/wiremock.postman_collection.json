@@ -1,0 +1,363 @@
+{
+	"info": {
+		"_postman_id": "c0bed237-5a17-43c7-b9ef-781eb0b34f10",
+		"name": "wiremock",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13435667"
+	},
+	"item": [
+		{
+			"name": "Get Mappings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Documents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/docs",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"docs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Mapping by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/mappings/23349a69-1f70-4b49-872c-87e445648355",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"mappings",
+						"23349a69-1f70-4b49-872c-87e445648355"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Mapping",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/mappings/2b80b62e-d153-4aa9-98f1-c12174a70108",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"mappings",
+						"2b80b62e-d153-4aa9-98f1-c12174a70108"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Mapping",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/mappings",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"mappings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Mapping",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/mappings/d8c25b14-1114-4b4e-bca3-8aec12142153",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"mappings",
+						"d8c25b14-1114-4b4e-bca3-8aec12142153"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/mappings",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"mappings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Requests",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/requests",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Requests Count",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"urlPattern\": \".*ABC.*\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/requests/count",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"requests",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/requests/a615c8bf-db2e-4dd4-82f9-f83266093298",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"requests",
+						"a615c8bf-db2e-4dd4-82f9-f83266093298"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Requests",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/requests",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Requests",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"urlPattern\": \".*some.*\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/requests/find",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"requests",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove requests",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"method\": \"GET\",\n    \"urlPattern\": \".*[/live|/ready].*\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/requests/remove",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"requests",
+						"remove"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Unmatched Requests",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{wiremock-base}}/__admin/requests/unmatched",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"__admin",
+						"requests",
+						"unmatched"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Request to Wiremock",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{wiremock-base}}/some/thing/2",
+					"host": [
+						"{{wiremock-base}}"
+					],
+					"path": [
+						"some",
+						"thing",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

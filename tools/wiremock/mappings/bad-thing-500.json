@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/some/bad/thing"
+  },
+  "response": {
+    "status": 500,
+    "body": "Some bad thing happened!",
+    "headers": {
+      "Content-Type": "text/plain"
+    }
+  }
+}

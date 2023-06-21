@@ -42,5 +42,37 @@ services:
     networks:
       - financial_portfolio_network
 
+### TEST / PROCESS RELATED DEPENDENCIES
+
+  jenkins:
+    image: jenkins/jenkins:latest-jdk17
+    container_name: jenkins
+    privileged: true
+    user: root
+    ports:
+      - "9001:8080"
+      - "50000:50000"
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+      - JENKINS_HOME=/var/jenkins_home
+    volumes:
+      - /var/jenkins/caches:/var/jenkins/caches
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/jenkins_home:/var/jenkins_home
+    networks:
+      - financial_portfolio_network
+
+  wiremock:
+    build:
+      dockerfile: tools/wiremock/Dockerfile
+    #container_name: wiremock
+    command: java -jar lib/wiremock-jre8-standalone.jar --port 8080 --local-response-templating --max-request-journal-entries 1000 --root-dir .
+    ports:
+      - "9002:8080"
+    networks:
+      - financial_portfolio_network
+
 networks:
   financial_portfolio_network:
