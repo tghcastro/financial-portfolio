@@ -13,15 +13,15 @@ public class Stock {
     @Id
     @GeneratedValue
     private Long id;
-    private String ticker;
+    private String symbol;
     private String company;
 
     public Stock() {
 
     }
 
-    public Stock(String ticker) {
-        this.setTicker(ticker);
+    public Stock(String symbol) {
+        this.setSymbol(symbol);
     }
 
     public Long getId() {
@@ -32,12 +32,12 @@ public class Stock {
         this.id = id;
     }
 
-    public String getTicker() {
-        return ticker;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getCompany() {
@@ -58,17 +58,17 @@ public class Stock {
         }
 
         return Objects.equals(this.id, stockToCompare.id) &&
-                Objects.equals(this.ticker, stockToCompare.ticker) &&
+                Objects.equals(this.symbol, stockToCompare.symbol) &&
                 Objects.equals(this.company, stockToCompare.company);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.ticker, this.company);
+        return Objects.hash(this.id, this.symbol, this.company);
     }
 
     @Override
     public String toString() {
-        return String.format("Stock [Id:%s] [Ticker:%s] [Company:%s]", this.id, this.ticker, this.company);
+        return String.format("Stock [Id:%s] [Symbol:%s] [Company:%s]", this.id, this.symbol, this.company);
     }
 }

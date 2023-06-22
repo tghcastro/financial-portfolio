@@ -13,7 +13,7 @@ class StockTests {
         Stock someStock = new Stock("KO");
         someStock.setId(1L);
         someStock.setCompany("Coca-Cola");
-        String expectedStringDefinition = "Stock [Id:1] [Ticker:KO] [Company:Coca-Cola]";
+        String expectedStringDefinition = "Stock [Id:1] [Symbol:KO] [Company:Coca-Cola]";
 
         assertThat(someStock.toString()).isEqualTo(expectedStringDefinition);
     }
@@ -44,7 +44,7 @@ class StockTests {
     }
 
     @Test
-    void stockIsNotEqualWhenTheirTickersAreDifferent() {
+    void stockIsNotEqualWhenTheirSymbolsAreDifferent() {
         Stock stockA = new Stock("DEF");
         Stock stockB = new Stock("ABC");
 

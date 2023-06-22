@@ -32,7 +32,7 @@ public class StockService {
         return this.repository.findById(id)
                 .map(stock -> {
                     stock.setCompany(stockToUpdate.getCompany());
-                    stock.setTicker(stockToUpdate.getTicker());
+                    stock.setSymbol(stockToUpdate.getSymbol());
                     return repository.save(stock);
                 })
                 .orElseGet(() -> {
