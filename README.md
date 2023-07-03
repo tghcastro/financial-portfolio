@@ -45,12 +45,20 @@ docker run -it --entrypoint /bin/sh -t financial-portfolio
 ## Test Strategy
 
 This project contains different test approaches for learning purposes. They are:
-1. **Unit Tests**: Each component has its own Unit Tests which are available on  `component-folder\src\test`
-2. **Postman**: Postman is a great tool for testing APIs manually. Postman's files are available on `test-approaches/Postman` It allows the creation of test suites and execution on a CI Tool, however, this is not the goal of this project, since there are other better options for it.
+1. **Unit Tests**: 
+Each module has its own Unit Tests suite, and they are using Mockito as test doubles. The idea is to test small pieces of each module focusing the validation in specific part where it was developed. The unit tests are available in `component-folder\src\test\unit` for each component
+2. **Integration Tests**: 
+Tests that exercise each module of the SUT to ensure the module can communicate with each other. However, I'm using test doubles (Wiremock and In Memory database) since the real integration is going to be replaced by Contract Tests. The integration tests are available in `component-folder\src\test\integration` for each component
+3. **Component Tests (or service tests)**: TO BE CREATED
+4. **Contract Testing (Pact.IO)**: TO BE CREATED
+5. **Postman**: In my opinion Postman is a great tool for testing APIs **manually**. It allows the creation of test suites and execution on a CI Tool, however, this is not the goal of this project, since there are other better options for it. Postman's files are available on `test-approaches/Postman`
 
-## References:
+## References
 
-### Spring: 
+### Test Automation
+https://martinfowler.com/bliki/IntegrationTest.html
+
+### Spring
 
 - https://spring.io/guides/tutorials/rest/
 
