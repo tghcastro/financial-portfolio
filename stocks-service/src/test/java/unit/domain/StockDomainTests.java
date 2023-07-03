@@ -1,12 +1,11 @@
-package com.tghcastro.financialportfolio.stocksservice.domain;
+package unit.domain;
 
+import com.tghcastro.financialportfolio.stocksservice.domain.Stock;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@SpringBootTest
-class StockTests {
+class StockDomainTests {
 
     @Test
     void stockHasCorrectStringDefinitionWhenToString() {

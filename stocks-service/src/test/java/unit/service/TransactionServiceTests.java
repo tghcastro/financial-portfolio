@@ -1,5 +1,8 @@
-package com.tghcastro.financialportfolio.stocksservice.domain;
+package unit.service;
 
+import com.tghcastro.financialportfolio.stocksservice.domain.Stock;
+import com.tghcastro.financialportfolio.stocksservice.domain.Transaction;
+import com.tghcastro.financialportfolio.stocksservice.domain.TransactionAction;
 import com.tghcastro.financialportfolio.stocksservice.repository.StockRepository;
 import com.tghcastro.financialportfolio.stocksservice.repository.TransactionRepository;
 import com.tghcastro.financialportfolio.stocksservice.service.TransactionService;
@@ -13,7 +16,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TransactionTests {
+public class TransactionServiceTests {
 
     private TransactionService service;
     private TransactionRepository mockedTransactionRepository;
