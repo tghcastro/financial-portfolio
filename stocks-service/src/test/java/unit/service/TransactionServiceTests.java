@@ -11,8 +11,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static helpers.GenerateTestDataHelper.generateRandomLong;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.hibernate.internal.util.collections.CollectionHelper.listOf;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -88,7 +93,7 @@ public class TransactionServiceTests {
     }
 
     private Transaction buildSuccessfulTestTransaction(TransactionAction action, Boolean registered, Boolean outOfStock) {
-        Long account = 1000L;
+        Long account = generateRandomLong();
         String stockSymbol = "ABC";
 
         Stock stock = new Stock(stockSymbol);
@@ -99,17 +104,19 @@ public class TransactionServiceTests {
         transaction.setUnitPrice(10.0F);
 
         Stock stockToReturn = transaction.getStock();
+        List<Transaction> stocksByAccount = listOf(transaction);
         if (!registered) {
             stockToReturn = null;
+            stocksByAccount = new ArrayList<>();
         }
         when(mockedStockRepository.findBySymbol(transaction.getSymbol())).thenReturn(stockToReturn);
+        when(mockedTransactionRepository.findByAccountId(transaction.getAccountId())).thenReturn(stocksByAccount);
 
-
-        float stockPosition = transaction.getQuantity();
-        if (outOfStock) {
-            stockPosition = 0F;
-        }
-        when(mockedTransactionRepository.getStockPosition(account, stockSymbol)).thenReturn(stockPosition);
+//        float stockPosition = transaction.getQuantity();
+//        if (outOfStock) {
+//            stockPosition = 0F;
+//        }
+//        when(mockedTransactionRepository.getStockPosition(account, stockSymbol)).thenReturn(stockPosition);
 
         return transaction;
     }

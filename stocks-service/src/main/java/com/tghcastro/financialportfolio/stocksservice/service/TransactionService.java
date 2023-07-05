@@ -1,11 +1,14 @@
 package com.tghcastro.financialportfolio.stocksservice.service;
 
+import com.tghcastro.financialportfolio.stocksservice.domain.Stock;
 import com.tghcastro.financialportfolio.stocksservice.domain.Transaction;
 import com.tghcastro.financialportfolio.stocksservice.exceptions.StockNotFoundException;
 import com.tghcastro.financialportfolio.stocksservice.exceptions.TransactionOutOfStockException;
 import com.tghcastro.financialportfolio.stocksservice.repository.StockRepository;
 import com.tghcastro.financialportfolio.stocksservice.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -20,15 +23,21 @@ public class TransactionService {
 
     public Transaction register(Transaction transaction) {
 
-        if (stockRepository.findBySymbol(transaction.getSymbol()) == null) {
-            throw new StockNotFoundException(transaction.getSymbol());
-        }
+        Stock storedStock = stockRepository.findById(transaction.getId()).orElseThrow(() -> new StockNotFoundException(transaction.getSymbol()));
 
-        float stockCurrentPosition = transactionRepository.getStockPosition(transaction.getAccountId(), transaction.getSymbol());
+        float stockCurrentPosition = loadStockPosition(transaction);
         if (stockCurrentPosition <= 0) {
             throw new TransactionOutOfStockException(transaction.getSymbol());
         }
 
         return transaction;
+    }
+
+    private float loadStockPosition(Transaction transaction) {
+        //return transactionRepository.getStockPosition(transaction.getAccountId());
+        List<Transaction> transactions = transactionRepository.findByAccountId(transaction.getAccountId());
+
+        double position = transactions.stream().mapToDouble(t -> t.getQuantity()).sum();
+        return (float)position;
     }
 }

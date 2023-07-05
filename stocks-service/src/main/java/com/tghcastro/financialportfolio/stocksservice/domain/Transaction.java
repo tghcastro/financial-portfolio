@@ -1,8 +1,6 @@
 package com.tghcastro.financialportfolio.stocksservice.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -13,6 +11,8 @@ public class Transaction {
     @GeneratedValue
     private Long id;
     private Long accountId;
+
+    @ManyToOne(targetEntity = Stock.class)
     private Stock stock;
     private Date executionDate;
     private Date registerDate;
