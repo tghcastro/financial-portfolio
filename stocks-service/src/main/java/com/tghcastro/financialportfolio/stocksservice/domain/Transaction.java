@@ -12,7 +12,8 @@ public class Transaction {
     private Long id;
     private Long accountId;
 
-    @ManyToOne(targetEntity = Stock.class)
+    @ManyToOne(targetEntity = Stock.class, optional = false)
+    @JoinColumn(name = "stock_id", nullable = false)
     private Stock stock;
     private Date executionDate;
     private Date registerDate;
