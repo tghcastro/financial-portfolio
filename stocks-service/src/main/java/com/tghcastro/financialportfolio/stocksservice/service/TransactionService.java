@@ -2,6 +2,7 @@ package com.tghcastro.financialportfolio.stocksservice.service;
 
 import com.tghcastro.financialportfolio.stocksservice.domain.Stock;
 import com.tghcastro.financialportfolio.stocksservice.domain.Transaction;
+import com.tghcastro.financialportfolio.stocksservice.domain.TransactionAction;
 import com.tghcastro.financialportfolio.stocksservice.exceptions.StockNotFoundException;
 import com.tghcastro.financialportfolio.stocksservice.exceptions.TransactionOutOfStockException;
 import com.tghcastro.financialportfolio.stocksservice.repository.StockRepository;
@@ -21,23 +22,47 @@ public class TransactionService {
         this.stockRepository = stockRepository;
     }
 
-    public Transaction register(Transaction transaction) {
+    public Transaction register(Transaction transaction, String stockSymbol) {
 
-        Stock storedStock = stockRepository.findById(transaction.getId()).orElseThrow(() -> new StockNotFoundException(transaction.getSymbol()));
+        Stock storedStock = stockRepository.findBySymbol(stockSymbol).orElseThrow(() -> new StockNotFoundException(transaction.getSymbol()));
 
-        float stockCurrentPosition = loadStockPosition(transaction);
-        if (stockCurrentPosition <= 0) {
-            throw new TransactionOutOfStockException(transaction.getSymbol());
+        if(transaction.getAction() == TransactionAction.SELL) {
+            validateSellTransaction(transaction, stockSymbol);
         }
 
         return transaction;
     }
 
-    private float loadStockPosition(Transaction transaction) {
-        //return transactionRepository.getStockPosition(transaction.getAccountId());
-        List<Transaction> transactions = transactionRepository.findByAccountId(transaction.getAccountId());
 
-        double position = transactions.stream().mapToDouble(t -> t.getQuantity()).sum();
+
+    public List<Transaction> listTransactions(Long accountId) {
+        return null;
+    }
+
+    private void validateSellTransaction(Transaction transaction, String stockSymbol) {
+        float stockCurrentPosition = loadCurrentStockPosition(transaction.getAccountId(), stockSymbol);
+        float futureStockPosition = stockCurrentPosition - transaction.getQuantity();
+        if (futureStockPosition < 0) {
+            throw new TransactionOutOfStockException(transaction.getSymbol());
+        }
+    }
+
+    private float loadCurrentStockPosition(Long accountId, String symbol) {
+        List<Transaction> transactions = transactionRepository.findByAccountId(accountId);
+
+        double boughtTransactions = transactions.stream()
+                .filter(t -> t.getSymbol().equals(symbol) && t.getAction().equals(TransactionAction.BUY))
+                .mapToDouble(t -> t.getQuantity()).sum();
+
+        double soldTransactions = transactions.stream()
+                .filter(t -> t.getSymbol().equals(symbol) && t.getAction().equals(TransactionAction.SELL))
+                .mapToDouble(t -> t.getQuantity()).sum();
+
+        double position = boughtTransactions - soldTransactions;
+
         return (float)position;
     }
+
+
+
 }
