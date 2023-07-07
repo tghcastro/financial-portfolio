@@ -31,8 +31,8 @@ public class StockService {
     public Stock updateStock(Long id, Stock stockToUpdate) {
         return this.repository.findById(id)
                 .map(stock -> {
-                    stock.setCompany(stockToUpdate.getCompany());
-                    stock.setSymbol(stockToUpdate.getSymbol());
+                    stock.setCompany(stockToUpdate.company());
+                    stock.setSymbol(stockToUpdate.symbol());
                     return repository.save(stock);
                 })
                 .orElseGet(() -> {

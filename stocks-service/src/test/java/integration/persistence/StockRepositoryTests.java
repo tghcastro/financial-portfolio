@@ -34,9 +34,9 @@ public class StockRepositoryTests {
         Stock stock = new Stock("ABC");
         stock.setCompany(company);
         Stock savedStock = stockRepository.save(stock);
-        assertThat(savedStock.getId()).isNotNull().isGreaterThan(0);
-        assertThat(savedStock.getSymbol()).isEqualTo(stock.getSymbol());
-        assertThat(savedStock.getSymbol()).isEqualTo(stock.getSymbol());
+        assertThat(savedStock.id()).isNotNull().isGreaterThan(0);
+        assertThat(savedStock.symbol()).isEqualTo(stock.symbol());
+        assertThat(savedStock.symbol()).isEqualTo(stock.symbol());
     }
 
     @ParameterizedTest

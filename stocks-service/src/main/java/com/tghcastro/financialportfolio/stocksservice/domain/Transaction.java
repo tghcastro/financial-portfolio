@@ -62,7 +62,7 @@ public class Transaction {
     }
 
     public String getSymbol() {
-        return stock.getSymbol();
+        return stock.symbol();
     }
 
     public Instant getExecutionDate() {

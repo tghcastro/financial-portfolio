@@ -56,14 +56,23 @@ Tests that exercise each module of the SUT to ensure the module can communicate 
 
 ## References
 
-### Test Automation
+### Test Automation Concepts
 
 - [IntegrationTest (Martin Fowler)](https://martinfowler.com/bliki/IntegrationTest.html)
 
 - [Testing Strategies in a Microservice Architecture (Martin Fowler)](https://martinfowler.com/articles/microservice-testing/#testing-integration-introduction)
 
-- [JUnit 5 Parameterized Tests (baeldung)](https://www.baeldung.com/parameterized-tests-junit-5)
-### Spring
+### Tools Reference
 
-- [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
+- JUnit 5: [JUnit 5 Parameterized Tests (baeldung)](https://www.baeldung.com/parameterized-tests-junit-5)
 
+- RestAssured: 
+  - [Rest Assured Usage](https://github.com/rest-assured/rest-assured/wiki/Usage)
+  - [Testing RESTful Services in Java: Best Practices (Philipp Hauer's Blog)](https://phauer.com/2016/testing-restful-services-java-best-practices/)
+- AssertJ: [AssertJ Core Assertions Guide](https://assertj.github.io/doc/#assertj-core-assertions-guide)
+
+- Spring: [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
+
+### Useful Tools
+
+- [JSON to JSON Schema](https://www.liquid-technologies.com/online-json-to-schema-converter)

@@ -1,9 +1,11 @@
 package com.tghcastro.financialportfolio.stocksservice.controller;
 
+import com.tghcastro.financialportfolio.stocksservice.controller.contracts.request.PostStockBody;
 import com.tghcastro.financialportfolio.stocksservice.domain.Stock;
 import com.tghcastro.financialportfolio.stocksservice.exceptions.StockNotFoundException;
-import com.tghcastro.financialportfolio.stocksservice.repository.StockRepository;
 import com.tghcastro.financialportfolio.stocksservice.service.StockService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +14,9 @@ import java.util.List;
 
 @RestController
 public class StockController {
-    private final StockRepository repository;
-    private final StockService stockService;
 
-    public StockController(StockRepository repository, StockService stockService) {
-        this.repository = repository;
-        this.stockService = stockService;
-    }
+    @Autowired
+    private StockService stockService;
 
     @GetMapping("/stocks")
     List<Stock> listAll() {
@@ -26,8 +24,10 @@ public class StockController {
     }
 
     @PostMapping("/stocks")
-    Stock createNew(@RequestBody Stock newStock) {
-        return this.stockService.createStock(newStock);
+    Stock createNew(@RequestBody PostStockBody newStock) {
+        Stock stock = new Stock(newStock.symbol());
+        stock.setCompany(newStock.company());
+        return this.stockService.createStock(stock);
     }
 
     @GetMapping("/stocks/{id}")
@@ -36,7 +36,12 @@ public class StockController {
     }
 
     @PutMapping("/stocks/{id}")
-    Stock updateStock(@RequestBody Stock stock, @PathVariable Long id) {
+    Stock updateStock(@RequestBody PostStockBody dataToUpdate, @PathVariable Long id) {
+        Stock stock = new Stock()
+                .setSymbol(dataToUpdate.symbol())
+                .setCompany(dataToUpdate.company())
+                .setId(id);
+
         return this.stockService.updateStock(id, stock);
     }
 

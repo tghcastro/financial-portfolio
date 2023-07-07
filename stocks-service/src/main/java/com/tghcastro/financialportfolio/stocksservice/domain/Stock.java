@@ -1,10 +1,6 @@
 package com.tghcastro.financialportfolio.stocksservice.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
@@ -29,28 +25,31 @@ public class Stock {
         this.setSymbol(symbol);
     }
 
-    public Long getId() {
+    public Long id() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Stock setId(Long id) {
         this.id = id;
+        return this;
     }
 
-    public String getSymbol() {
+    public String symbol() {
         return symbol;
     }
 
-    public void setSymbol(String symbol) {
+    public Stock setSymbol(String symbol) {
         this.symbol = symbol;
+        return this;
     }
 
-    public String getCompany() {
+    public String company() {
         return company;
     }
 
-    public void setCompany(String company) {
+    public Stock setCompany(String company) {
         this.company = company;
+        return this;
     }
 
     @Override
