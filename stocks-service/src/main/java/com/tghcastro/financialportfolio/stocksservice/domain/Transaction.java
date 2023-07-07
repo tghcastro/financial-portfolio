@@ -10,7 +10,7 @@ public class Transaction {
     @Id
     @GeneratedValue
     private Long id;
-    private Long accountId;
+    private String accountId;
 
     @ManyToOne(targetEntity = Stock.class, optional = false)
     @JoinColumn(name = "stock_id", nullable = false)
@@ -45,11 +45,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public Long getAccountId() {
+    public String getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
 

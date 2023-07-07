@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static helpers.GenerateTestDataHelper.generateRandomLong;
+import static helpers.GenerateTestDataHelper.generateRandomUUID;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.hibernate.internal.util.collections.CollectionHelper.listOf;
@@ -66,7 +66,7 @@ public class TransactionServiceTests {
     @ValueSource(ints = {100, 50})
     void sellStockPositionSuccessfully(int soldPosition) {
         String stockSymbol = "ABC";
-        Long accountId = generateRandomLong();
+        String accountId = generateRandomUUID();
 
         Transaction transactionBuy = buildSuccessfulTestTransaction(stockSymbol, TransactionAction.BUY, accountId);
         transactionBuy.setQuantity(100);
@@ -114,7 +114,7 @@ public class TransactionServiceTests {
         Transaction transactionSell = buildSuccessfulTestTransaction(stockSymbol, TransactionAction.SELL);
         transactionSell.setQuantity(101);
 
-        Long accountId = transactionSell.getAccountId();
+        String accountId = transactionSell.getAccountId();
 
         when(mockedStockRepository.findBySymbol(stockSymbol)).thenReturn(Optional.ofNullable(transactionSell.getStock()));
         when(mockedTransactionRepository.findByAccountId(accountId)).thenReturn(previousTransactions);
@@ -130,7 +130,7 @@ public class TransactionServiceTests {
     @DisplayName("Register - Generate Error when selling more stocks than I own")
     void generateErrorSellingOutOfStock_SellingMoreThanIOwn() {
         String stockSymbol = "ABC";
-        Long accountId = generateRandomLong();
+        String accountId = generateRandomUUID();
 
         Transaction transactionBuy = buildSuccessfulTestTransaction(stockSymbol, TransactionAction.BUY, accountId);
         transactionBuy.setQuantity(100);
@@ -156,7 +156,7 @@ public class TransactionServiceTests {
 
     @Test
     void listAccountTransactions() {
-        Long accountId = generateRandomLong();
+        String accountId = generateRandomUUID();
         Transaction transactionBuyAbc = buildSuccessfulTestTransaction(accountId, "ABC", 100, 10F, TransactionAction.BUY);
         Transaction transactionSellHalfAbc1 = buildSuccessfulTestTransaction(accountId, "ABC", 50, 11F, TransactionAction.SELL);
         Transaction transactionSellHalfAbc2 = buildSuccessfulTestTransaction(accountId, "ABC", 50, 15F, TransactionAction.SELL);
@@ -181,14 +181,14 @@ public class TransactionServiceTests {
         return buildSuccessfulTestTransaction(stockSymbol, action, null);
     }
 
-    private Transaction buildSuccessfulTestTransaction(String stockSymbol, TransactionAction action, Long accountId) {
+    private Transaction buildSuccessfulTestTransaction(String stockSymbol, TransactionAction action, String accountId) {
         int quantity = 100;
         float unitPrice = 10.5F;
-        accountId = accountId == null ? generateRandomLong() : accountId;
+        accountId = accountId == null ? generateRandomUUID() : accountId;
         return buildSuccessfulTestTransaction(accountId, stockSymbol, quantity, unitPrice, action);
     }
 
-    private Transaction buildSuccessfulTestTransaction(Long accountId, String stockSymbol, int quantity, float unitPrice, TransactionAction action) {
+    private Transaction buildSuccessfulTestTransaction(String accountId, String stockSymbol, int quantity, float unitPrice, TransactionAction action) {
         Stock stock = new Stock(stockSymbol);
 
         Transaction transaction = new Transaction(stock, action);
@@ -198,6 +198,4 @@ public class TransactionServiceTests {
 
         return transaction;
     }
-
-
 }

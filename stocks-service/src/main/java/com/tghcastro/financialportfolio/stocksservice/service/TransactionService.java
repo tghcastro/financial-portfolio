@@ -36,7 +36,7 @@ public class TransactionService {
         return transaction;
     }
 
-    public List<Transaction> listTransactions(Long accountId) {
+    public List<Transaction> listTransactions(String accountId) {
         return transactionRepository.findByAccountId(accountId);
     }
 
@@ -48,7 +48,7 @@ public class TransactionService {
         }
     }
 
-    private float loadCurrentStockPosition(Long accountId, String symbol) {
+    private float loadCurrentStockPosition(String accountId, String symbol) {
         List<Transaction> transactions = transactionRepository.findByAccountId(accountId);
 
         double boughtTransactions = transactions.stream()

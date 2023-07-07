@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
-import static helpers.GenerateTestDataHelper.generateRandomLong;
+import static helpers.GenerateTestDataHelper.generateRandomUUID;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(classes = StocksServiceApplication.class)
@@ -31,7 +31,7 @@ public class TransactionRepositoryTests {
 
     @Test
     public void createTransactionTest() {
-        Long account = generateRandomLong();
+        String account = generateRandomUUID();
         String stockSymbol = "ABC";
 
         Stock stock = new Stock(stockSymbol);

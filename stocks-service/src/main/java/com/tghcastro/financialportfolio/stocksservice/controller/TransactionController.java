@@ -16,12 +16,12 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @GetMapping("/transaction")
-    List<Transaction> listAll(@RequestHeader(value = "x-account-id") Long accountId) {
+    List<Transaction> listAll(@RequestHeader(value = "x-account-id") String accountId) {
         return transactionService.listTransactions(accountId);
     }
 
     @PostMapping("/transaction/register")
-    Transaction createNew(@RequestHeader(value = "x-account-id") Long accountId, @RequestBody PostTransactionBody transactionData) {
+    Transaction createNew(@RequestHeader(value = "x-account-id") String accountId, @RequestBody PostTransactionBody transactionData) {
 
         Transaction transaction = new Transaction(transactionData.symbol(), transactionData.action());
         transaction.setUnitPrice(transactionData.unitPrice());
