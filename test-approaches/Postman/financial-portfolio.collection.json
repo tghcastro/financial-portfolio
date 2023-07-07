@@ -10,6 +10,291 @@
 			"name": "stocks-service",
 			"item": [
 				{
+					"name": "Stocks",
+					"item": [
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"symbol\": \"KO\",\n    \"company\": \"Coca-Cola\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{stocks-service}}/stocks",
+									"host": [
+										"{{stocks-service}}"
+									],
+									"path": [
+										"stocks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"symbol\": \"PEP\",\n    \"company\": \"PepsiCoAAAA\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{stocks-service}}/stocks/1",
+									"host": [
+										"{{stocks-service}}"
+									],
+									"path": [
+										"stocks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List all",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{stocks-service}}/stocks",
+									"host": [
+										"{{stocks-service}}"
+									],
+									"path": [
+										"stocks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{stocks-service}}/stocks/2",
+									"host": [
+										"{{stocks-service}}"
+									],
+									"path": [
+										"stocks",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{stocks-service}}/stocks/1",
+									"host": [
+										"{{stocks-service}}"
+									],
+									"path": [
+										"stocks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Transactions",
+					"item": [
+						{
+							"name": "Register Transaction (Buy)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-account-id",
+										"value": "{{account_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"symbol\": \"KO\",\n    \"executionDate\": \"{{execution_date_buy}}\",\n    \"action\": \"BUY\",\n    \"quantity\": 100,\n    \"unitPrice\": 10.01,\n    \"totalCosts\": 1.03\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{stocks-service}}/transaction/register",
+									"host": [
+										"{{stocks-service}}"
+									],
+									"path": [
+										"transaction",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register Transaction (Sell)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment');",
+											"pm.collectionVariables.set(\"execution_date\", moment.utc)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-account-id",
+										"value": "{{account_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"symbol\": \"KO\",\n    \"executionDate\": \"{{execution_date_sell}}\",\n    \"action\": \"SELL\",\n    \"quantity\": 100,\n    \"unitPrice\": 10.01,\n    \"totalCosts\": 1.03\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{stocks-service}}/transaction/register",
+									"host": [
+										"{{stocks-service}}"
+									],
+									"path": [
+										"transaction",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Account Transactions",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment');",
+											"pm.collectionVariables.set(\"execution_date\", moment.utc)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-account-id",
+										"value": "{{account_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"symbol\": \"KO\",\n    \"executionDate\": {{execution_date}},\n    \"action\": \"SELL\",\n    \"quantity\": 100,\n    \"unitPrice\": 10.01,\n    \"totalCosts\": 1.03\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{stocks-service}}/transaction",
+									"host": [
+										"{{stocks-service}}"
+									],
+									"path": [
+										"transaction"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Health",
 					"request": {
 						"method": "GET",
@@ -26,145 +311,26 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				},
 				{
-					"name": "Create",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"ticker\": \"KO\",\n    \"company\": \"Coca-Cola\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{stocks-service}}/stocks",
-							"host": [
-								"{{stocks-service}}"
-							],
-							"path": [
-								"stocks"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"ticker\": \"PEP\",\n    \"company\": \"PepsiCo\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{stocks-service}}/stocks/1",
-							"host": [
-								"{{stocks-service}}"
-							],
-							"path": [
-								"stocks",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List all",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{stocks-service}}/stocks",
-							"host": [
-								"{{stocks-service}}"
-							],
-							"path": [
-								"stocks"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{stocks-service}}/stocks/2",
-							"host": [
-								"{{stocks-service}}"
-							],
-							"path": [
-								"stocks",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{stocks-service}}/stocks/2",
-							"host": [
-								"{{stocks-service}}"
-							],
-							"path": [
-								"stocks",
-								"2"
-							]
-						}
-					},
-					"response": []
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -177,9 +343,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{stocks-service}}/actuator/health",
+							"raw": "{{portfolio-service}}/actuator/health",
 							"host": [
-								"{{stocks-service}}"
+								"{{portfolio-service}}"
 							],
 							"path": [
 								"actuator",
@@ -190,6 +356,40 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "execution_date_buy",
+			"value": "2023-07-01T09:28:52.062+00:00"
+		},
+		{
+			"key": "execution_date_sell",
+			"value": "2023-07-07T09:28:52.062+00:00"
+		},
+		{
+			"key": "account_id",
+			"value": "1001"
 		}
 	]
 }

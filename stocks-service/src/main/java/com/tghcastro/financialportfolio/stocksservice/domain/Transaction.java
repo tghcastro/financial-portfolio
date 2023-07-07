@@ -2,7 +2,7 @@ package com.tghcastro.financialportfolio.stocksservice.domain;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Entity
 public class Transaction {
@@ -15,8 +15,8 @@ public class Transaction {
     @ManyToOne(targetEntity = Stock.class, optional = false)
     @JoinColumn(name = "stock_id", nullable = false)
     private Stock stock;
-    private Date executionDate;
-    private Date registerDate;
+    private Instant executionDate;
+    private Instant registerDate;
     private TransactionAction action;
     private float quantity;
     private float unitPrice;
@@ -24,6 +24,13 @@ public class Transaction {
     private float accountValue;
     private float exchangeRate;
     private float totalCosts;
+
+    public Transaction() {}
+
+    public Transaction(String stockSymbol, TransactionAction action) {
+        this.stock = new Stock(stockSymbol);
+        this.action = action;
+    }
 
     public Transaction(Stock stock, TransactionAction action) {
         this.stock = stock;
@@ -50,23 +57,27 @@ public class Transaction {
         return stock;
     }
 
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
     public String getSymbol() {
         return stock.getSymbol();
     }
 
-    public Date getExecutionDate() {
+    public Instant getExecutionDate() {
         return executionDate;
     }
 
-    public void setExecutionDate(Date executionDate) {
+    public void setExecutionDate(Instant executionDate) {
         this.executionDate = executionDate;
     }
 
-    public Date getRegisterDateDate() {
+    public Instant getRegisterDateDate() {
         return registerDate;
     }
 
-    public void setRegisterDateDate(Date registerDate) {
+    public void setRegisterDateDate(Instant registerDate) {
         this.registerDate = registerDate;
     }
 

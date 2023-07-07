@@ -25,18 +25,19 @@ public class TransactionService {
     public Transaction register(Transaction transaction, String stockSymbol) {
 
         Stock storedStock = stockRepository.findBySymbol(stockSymbol).orElseThrow(() -> new StockNotFoundException(transaction.getSymbol()));
+        transaction.setStock(storedStock);
 
         if(transaction.getAction() == TransactionAction.SELL) {
             validateSellTransaction(transaction, stockSymbol);
         }
 
+        transactionRepository.save(transaction);
+
         return transaction;
     }
 
-
-
     public List<Transaction> listTransactions(Long accountId) {
-        return null;
+        return transactionRepository.findByAccountId(accountId);
     }
 
     private void validateSellTransaction(Transaction transaction, String stockSymbol) {
