@@ -5,6 +5,9 @@ import com.tghcastro.financialportfolio.stocksservice.dto.StockResponseDto;
 import com.tghcastro.financialportfolio.stocksservice.domain.Stock;
 import com.tghcastro.financialportfolio.stocksservice.service.StockService;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +24,19 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
+    private ModelMapper mapper;
+
+    public  StockController() {
+        mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+    }
+
     @GetMapping("/stocks")
     ResponseEntity<List<StockResponseDto>> listAll() {
         List<Stock> optionalStock = this.stockService.listStocks();
         List<StockResponseDto> stocks = this.stockService.listStocks()
                 .stream()
-                .map(s -> entityToResponse(s))
+                .map(s -> toResponseDto(s))
                 .toList();
         return ResponseEntity.ok(stocks);
     }
@@ -34,7 +44,7 @@ public class StockController {
     @PostMapping("/stocks")
     ResponseEntity<StockResponseDto> createNew(@RequestBody PostStockBody newStock) {
         Stock stock = this.stockService.createStock(requestToEntity(newStock));
-        return ResponseEntity.ok(entityToResponse(stock));
+        return ResponseEntity.ok(toResponseDto(stock));
     }
 
     @GetMapping("/stocks/{id}")
@@ -43,18 +53,23 @@ public class StockController {
         if (optionalStock.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(entityToResponse(optionalStock.get()));
+        return ResponseEntity.ok(toResponseDto(optionalStock.get()));
     }
 
     @PutMapping("/stocks/{id}")
     ResponseEntity<StockResponseDto> updateStock(@RequestBody PostStockBody dataToUpdate, @PathVariable Long id) {
-        Stock updatedStock = this.stockService.updateStock(requestToEntity(dataToUpdate, id));
-        return ResponseEntity.ok(entityToResponse(updatedStock));
+        Stock stock = this.stockService.updateStock(requestToEntity(dataToUpdate, id));
+        return ResponseEntity.ok(toResponseDto(stock));
     }
 
     @DeleteMapping("/stocks/{id}")
     ResponseEntity<Void> deleteStock(@PathVariable Long id) {
         this.stockService.deactivateStock(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    private StockResponseDto toResponseDto(Stock stock) {
+        //return mapper.map(stock, StockResponseDto.class); // Not working
+        return entityToResponse(stock);
     }
 }
