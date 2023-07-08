@@ -1,6 +1,7 @@
 package com.tghcastro.financialportfolio.stocksservice.service;
 
 import com.tghcastro.financialportfolio.stocksservice.domain.Stock;
+import com.tghcastro.financialportfolio.stocksservice.exceptions.StockNotFoundException;
 import com.tghcastro.financialportfolio.stocksservice.repository.StockRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,17 +29,14 @@ public class StockService {
         return this.repository.findById(id);
     }
 
-    public Stock updateStock(Long id, Stock stockToUpdate) {
-        return this.repository.findById(id)
+    public Stock updateStock(Stock stockToUpdate) {
+        return this.repository.findById(stockToUpdate.id())
                 .map(stock -> {
                     stock.setCompany(stockToUpdate.company());
                     stock.setSymbol(stockToUpdate.symbol());
                     return repository.save(stock);
                 })
-                .orElseGet(() -> {
-                    stockToUpdate.setId(id);
-                    return repository.save(stockToUpdate);
-                });
+                .orElseThrow(() -> new StockNotFoundException(stockToUpdate.id()));
     }
 
     public void deactivateStock(Long id) {
