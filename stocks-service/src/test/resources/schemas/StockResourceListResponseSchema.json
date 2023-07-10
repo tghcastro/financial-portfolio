@@ -13,11 +13,15 @@
         },
         "company": {
           "type": "string"
+        },
+        "active": {
+          "type": "boolean"
         }
       },
       "required": [
         "id",
-        "symbol"
+        "symbol",
+        "active"
       ]
     }
   ]

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-
 @Entity
 public class Stock {
 
@@ -16,6 +15,8 @@ public class Stock {
     private String symbol;
 
     private String company;
+
+    private boolean active;
 
     public Stock() {
 
@@ -52,6 +53,15 @@ public class Stock {
         return this;
     }
 
+    public boolean active() {
+        return active;
+    }
+
+    public Stock setActive(boolean active) {
+        this.active = active;
+        return this;
+    }
+
     @Override
     public boolean equals(Object objectToCompare) {
         if (this == objectToCompare) {
@@ -73,6 +83,6 @@ public class Stock {
 
     @Override
     public String toString() {
-        return String.format("Stock [Id:%s] [Symbol:%s] [Company:%s]", this.id, this.symbol, this.company);
+        return String.format("Stock [Id:%s] [Symbol:%s] [Company:%s] [Active:%s]", this.id, this.symbol, this.company, this.active);
     }
 }

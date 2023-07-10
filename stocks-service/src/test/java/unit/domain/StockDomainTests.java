@@ -9,10 +9,12 @@ class StockDomainTests {
 
     @Test
     void stockHasCorrectStringDefinitionWhenToString() {
-        Stock someStock = new Stock("KO");
-        someStock.setId(1L);
-        someStock.setCompany("Coca-Cola");
-        String expectedStringDefinition = "Stock [Id:1] [Symbol:KO] [Company:Coca-Cola]";
+        Stock someStock = new Stock("KO")
+                .setId(1L)
+                .setCompany("Coca-Cola")
+                .setActive(true);
+
+        String expectedStringDefinition = "Stock [Id:1] [Symbol:KO] [Company:Coca-Cola] [Active:true]";
 
         assertThat(someStock.toString()).isEqualTo(expectedStringDefinition);
     }
