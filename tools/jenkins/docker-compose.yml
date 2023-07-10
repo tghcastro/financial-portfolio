@@ -15,6 +15,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - financial_portfolio_network
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
 
 networks:
   financial_portfolio_network:
