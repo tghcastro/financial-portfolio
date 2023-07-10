@@ -22,6 +22,16 @@ public class PostStockBody {
         return this;
     }
 
+    public boolean active() {
+        return active;
+    }
+
+    public PostStockBody setActive(boolean active) {
+        this.active = active;
+        return this;
+    }
+
     private String symbol;
     private String company;
+    private boolean active;
 }

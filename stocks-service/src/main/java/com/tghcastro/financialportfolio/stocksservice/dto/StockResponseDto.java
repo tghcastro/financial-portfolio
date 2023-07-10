@@ -30,6 +30,16 @@ public class StockResponseDto {
         return this;
     }
 
+    public boolean active() {
+        return active;
+    }
+
+    public StockResponseDto setActive(boolean active) {
+        this.active = active;
+        return this;
+    }
+
     public String symbol;
     public String company;
+    public boolean active;
 }

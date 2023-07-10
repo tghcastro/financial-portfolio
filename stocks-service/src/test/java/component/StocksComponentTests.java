@@ -19,8 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class StocksComponentTests {
-    public static final String POST_STOCK_RESPONSE_SCHEMA_JSON = "schemas/PostStockResponseSchema.json";
-    public static final String GET_STOCK_SCHEMA_JSON = "schemas/GetStockSchema.json";
+    public static final String STOCK_RESOURCE_RESPONSE_SCHEMA_JSON = "schemas/StockResourceResponseSchema.json";
+    public static final String STOCK_RESOURCE_LIST_SCHEMA_JSON = "schemas/StockResourceListResponseSchema.json";
     private String baseUrl = "http://localhost:8081";
     private String urlPath = "stocks";
     private ObjectMapper mapper;
@@ -44,7 +44,7 @@ public class StocksComponentTests {
 
     @Test
     public void createStock() throws JsonProcessingException {
-        String jsonBody = buildStockRequestBody(symbol, company);
+        String jsonBody = buildStockRequestBody(symbol, company, true);
 
         given()
             .spec(apiBassSpecification)
@@ -53,7 +53,7 @@ public class StocksComponentTests {
             .post("stocks")
         .then()
             .statusCode(200)
-            .body(matchesJsonSchemaInClasspath(POST_STOCK_RESPONSE_SCHEMA_JSON))
+            .body(matchesJsonSchemaInClasspath(STOCK_RESOURCE_RESPONSE_SCHEMA_JSON))
             .body("id", greaterThan(0))
             .body("symbol", is(symbol))
             .body("company", is(company));
@@ -70,7 +70,7 @@ public class StocksComponentTests {
 
         createdStock.setSymbol(newSymbol).setCompany(newCompany);
 
-        String updateBody = buildStockRequestBody(newSymbol, newCompany);
+        String updateBody = buildStockRequestBody(newSymbol, newCompany, true);
 
         Stock updatedStock = given()
             .spec(apiBassSpecification)
@@ -79,10 +79,87 @@ public class StocksComponentTests {
             .put(putStockPath)
         .then()
             .statusCode(200)
-            .body(matchesJsonSchemaInClasspath(POST_STOCK_RESPONSE_SCHEMA_JSON))
+            .body(matchesJsonSchemaInClasspath(STOCK_RESOURCE_RESPONSE_SCHEMA_JSON))
             .extract().as(Stock.class);
 
         assertThat(updatedStock).isEqualTo(createdStock);
+    }
+
+    @Test
+    public void deleteStock() throws JsonProcessingException {
+        Stock createdStock = createStock(symbol, company);
+        String stockResourcePath = urlPath + "/" + createdStock.id();
+
+        given()
+            .spec(apiBassSpecification)
+        .when()
+            .delete(stockResourcePath)
+        .then()
+            .statusCode(204);
+    }
+
+    @Test
+    public void getStockById() throws JsonProcessingException {
+        Stock createdStock = createStock(symbol, company);
+        String stockResourcePath = urlPath + "/" + createdStock.id();
+
+        Stock foundStock = given()
+                .spec(apiBassSpecification)
+                .when()
+                .get(stockResourcePath)
+                .then()
+                .statusCode(200)
+                .body(matchesJsonSchemaInClasspath(STOCK_RESOURCE_RESPONSE_SCHEMA_JSON))
+                .extract().as(Stock.class);
+
+        assertThat(foundStock).isEqualTo(createdStock);
+    }
+
+    @Test
+    public void deleteStockReturnNotFoundWhenUsingAnNonexistentId() throws JsonProcessingException {
+        long nonExistentId = 99999;
+        String stockResourcePath = urlPath + "/" + nonExistentId;
+
+        given()
+            .spec(apiBassSpecification)
+        .when()
+            .delete(stockResourcePath)
+        .then()
+            .statusCode(404);
+    }
+
+    @Test
+    public void getStockByIdReturnNotFoundWhenUsingAnNonexistentId() throws JsonProcessingException {
+        long nonExistentId = 99999;
+        String stockResourcePath = urlPath + "/" + nonExistentId;
+
+        given()
+            .spec(apiBassSpecification)
+        .when()
+            .get(stockResourcePath)
+        .then()
+            .statusCode(404);
+    }
+
+    @Test
+    public void updateStockReturnNotFoundWhenUsingAnNonexistentId() throws JsonProcessingException {
+        Stock createdStock = createStock(symbol, company);
+        long nonExistentId = 99999;
+        String putStockPath = urlPath + "/" + nonExistentId;
+
+        String newSymbol = generateRandomString();
+        String newCompany = generateRandomString();
+        createdStock.setSymbol(newSymbol).setCompany(newCompany);
+
+        String updateBody = buildStockRequestBody(newSymbol, newCompany, true);
+
+        given()
+            .spec(apiBassSpecification)
+            .body(updateBody)
+        .when()
+            .put(putStockPath)
+        .then()
+            .statusCode(404);
     }
 
     @Test
@@ -94,13 +171,11 @@ public class StocksComponentTests {
             .get(urlPath)
         .then()
             .statusCode(200)
-            .body(matchesJsonSchemaInClasspath(GET_STOCK_SCHEMA_JSON));
-
-        //TODO: It needs more validations
+            .body(matchesJsonSchemaInClasspath(STOCK_RESOURCE_LIST_SCHEMA_JSON));
     }
 
     private Stock createStock(String symbol, String company) throws JsonProcessingException {
-        String jsonBody = buildStockRequestBody(symbol, company);
+        String jsonBody = buildStockRequestBody(symbol, company, true);
 
         return given()
                 .spec(apiBassSpecification)
@@ -112,7 +187,7 @@ public class StocksComponentTests {
     }
 
     private RequestSpecification createStockSpecification(String symbol, String company) throws JsonProcessingException {
-        String jsonBody = buildStockRequestBody(symbol, company);
+        String jsonBody = buildStockRequestBody(symbol, company, true);
 
         given()
             .spec(apiBassSpecification)
@@ -124,9 +199,11 @@ public class StocksComponentTests {
         return apiBassSpecification;
     }
 
-    private String buildStockRequestBody(String symbol, String company) throws JsonProcessingException {
-        PostStockBody body = new PostStockBody();
-        body.setSymbol(symbol).setCompany(company);
+    private String buildStockRequestBody(String symbol, String company, boolean active) throws JsonProcessingException {
+        PostStockBody body = new PostStockBody()
+                .setSymbol(symbol)
+                .setCompany(company)
+                .setActive(active);
 
         String jsonBody = mapper.writeValueAsString(body);
         return jsonBody;

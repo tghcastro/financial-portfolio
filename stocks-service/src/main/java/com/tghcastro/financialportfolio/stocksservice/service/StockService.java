@@ -29,17 +29,21 @@ public class StockService {
         return this.repository.findById(id);
     }
 
-    public Stock updateStock(Stock stockToUpdate) {
+    public Optional<Stock> updateStock(Stock stockToUpdate) {
         return this.repository.findById(stockToUpdate.id())
-                .map(stock -> {
-                    stock.setCompany(stockToUpdate.company());
-                    stock.setSymbol(stockToUpdate.symbol());
-                    return repository.save(stock);
-                })
-                .orElseThrow(() -> new StockNotFoundException(stockToUpdate.id()));
+            .map(stock -> {
+                stock.setCompany(stockToUpdate.company());
+                stock.setSymbol(stockToUpdate.symbol());
+                stock.setActive(stockToUpdate.active());
+                return repository.save(stock);
+            });
     }
 
-    public void deactivateStock(Long id) {
-        this.repository.deleteById(id);
+    public Optional<Stock> deactivateStock(Long id) {
+        return this.repository.findById(id)
+            .map(stock -> {
+                stock.setActive(false);
+                return repository.save(stock);
+            });
     }
 }
