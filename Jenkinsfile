@@ -18,5 +18,13 @@ pipeline {
                 junit 'stocks-service/build/integration-tests/xml/*.xml'
             }
         }
+        stage('Component Tests') {
+            steps {
+                sh './gradlew :stocks-service:bootrun >application.log 2>&1 &'
+                sh './gradlew :stocks-service:componentTests'
+                sh 'pkill -9 -f stocks-service:bootrun'
+                junit 'stocks-service/build/component-tests/xml/*.xml'
+            }
+        }
     }
 }

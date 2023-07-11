@@ -47,10 +47,6 @@ tasks.register('unitTests', Test) {
 
 	reports.junitXml.destination = file("$buildDir/unit-tests/xml")
 	reports.html.destination = file("$buildDir/unit-tests/html")
-
-	testLogging {
-		events "passed"
-	}
 }
 
 tasks.register('integrationTests', Test) {
@@ -71,14 +67,27 @@ tasks.register('integrationTests', Test) {
 	testLogging {
 		events "passed"
 	}
-
-	doLast {
-		logger.quiet("$buildDir/integration-tests/xml")
-	}
 }
 
-check.dependsOn unitTests
-check.dependsOn integrationTests
+tasks.register('componentTests', Test) {
+	description = 'Runs Component tests'
+	group = 'verification'
+
+	filter {
+		includeTestsMatching "component.*"
+	}
+
+	shouldRunAfter test
+
+	useJUnitPlatform()
+
+	reports.junitXml.destination = file("$buildDir/component-tests/xml")
+	reports.html.destination = file("$buildDir/component-tests/html")
+
+	testLogging {
+		events "passed"
+	}
+}
 
 application {
 	mainClass = 'com.tghcastro.financialportfolio.stocksservice.StocksServiceApplication'
