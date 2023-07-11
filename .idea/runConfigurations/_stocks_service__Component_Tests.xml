@@ -10,9 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":stocks-service:test" />
-          <option value="--tests" />
-          <option value="&quot;component.StocksComponentTests&quot;" />
+          <option value=":stocks-service:componentTests" />
         </list>
       </option>
       <option name="vmOptions" />

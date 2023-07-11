@@ -98,3 +98,5 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+/tools/jenkins/jenkins_data/
+/application.log

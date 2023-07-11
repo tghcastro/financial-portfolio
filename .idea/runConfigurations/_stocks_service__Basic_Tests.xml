@@ -10,11 +10,9 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":stocks-service:test" />
-          <option value="--tests" />
-          <option value="&quot;unit.*&quot;" />
-          <option value="--tests" />
-          <option value="&quot;integration.*&quot;" />
+          <option value=":stocks-service:clean" />
+          <option value="unitTests" />
+          <option value="integrationTests" />
         </list>
       </option>
       <option name="vmOptions" />

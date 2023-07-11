@@ -64,12 +64,23 @@ Tests that exercise each module of the SUT to ensure the module can communicate 
 
 ### Tools Reference
 
+During the development of this "learning system" I needed to search for some help on the Internet. Here are the list of articles I think are more important. 
+
 - JUnit 5: [JUnit 5 Parameterized Tests (baeldung)](https://www.baeldung.com/parameterized-tests-junit-5)
 
 - RestAssured: 
   - [Rest Assured Usage](https://github.com/rest-assured/rest-assured/wiki/Usage)
   - [Testing RESTful Services in Java: Best Practices (Philipp Hauer's Blog)](https://phauer.com/2016/testing-restful-services-java-best-practices/)
 - AssertJ: [AssertJ Core Assertions Guide](https://assertj.github.io/doc/#assertj-core-assertions-guide)
+
+- Jenkins:
+  - [Downloading and running Jenkins in Docker](https://www.jenkins.io/doc/book/installing/docker/)
+  - [How to Build Your Custom Jenkins Docker Image (yallalabs.com)](https://yallalabs.com/devops/jenkins/how-to-build-custom-jenkins-docker-image/) 
+  - [How to Deploy Jenkins using Docker Compose (yallalabs.com)](https://yallalabs.com/devops/how-to-deploy-jenkins-using-docker-compose/)
+
+- Docker:
+  - [Manage Docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
+  - [Run the Docker daemon as a non-root user (Rootless mode)](https://docs.docker.com/engine/security/rootless/)
 
 - Spring: [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
 
