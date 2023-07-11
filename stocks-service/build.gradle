@@ -33,6 +33,53 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.register('unitTests', Test) {
+	description = 'Runs unit tests'
+	group = 'verification'
+
+	filter {
+		includeTestsMatching "unit.*"
+	}
+
+	shouldRunAfter test
+
+	useJUnitPlatform()
+
+	reports.junitXml.destination = file("$buildDir/unit-tests/xml")
+	reports.html.destination = file("$buildDir/unit-tests/html")
+
+	testLogging {
+		events "passed"
+	}
+}
+
+tasks.register('integrationTests', Test) {
+	description = 'Runs integration tests'
+	group = 'verification'
+
+	filter {
+		includeTestsMatching "integration.*"
+	}
+
+	shouldRunAfter test
+
+	useJUnitPlatform()
+
+	reports.junitXml.destination = file("$buildDir/integration-tests/xml")
+	reports.html.destination = file("$buildDir/integration-tests/html")
+
+	testLogging {
+		events "passed"
+	}
+
+	doLast {
+		logger.quiet("$buildDir/integration-tests/xml")
+	}
+}
+
+check.dependsOn unitTests
+check.dependsOn integrationTests
+
 application {
 	mainClass = 'com.tghcastro.financialportfolio.stocksservice.StocksServiceApplication'
 }

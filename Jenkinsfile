@@ -1,22 +1,22 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
+        stage('Build Service') {
             steps {
                 sh './gradlew build --exclude-task test'
             }
         }
         stage('Unit Tests') {
             steps {
-                sh './gradlew :stocks-service:test --tests "unit.*"'
+                sh './gradlew :stocks-service:unitTests'
+                junit 'stocks-service/build/unit-tests/xml/*.xml'
             }
-            junit keepLongStdio: true, testResults: '/stocks-service/build/test-results/*.xml'
         }
         stage('Integration Tests') {
             steps {
-                sh './gradlew :stocks-service:test --tests "integration.*"'
+                sh './gradlew :stocks-service:integrationTests'
+                junit 'stocks-service/build/integration-tests/xml/*.xml'
             }
-            junit keepLongStdio: true, testResults: '/stocks-service/build/test-results/*.xml'
         }
     }
 }
