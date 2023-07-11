@@ -45,7 +45,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"symbol\": \"PEP\",\n    \"company\": \"PepsiCoAAAA\"\n}",
+									"raw": "{\n    \"symbol\": \"PEP\",\n    \"company\": \"PepsiCo\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -112,13 +112,43 @@
 									}
 								},
 								"url": {
-									"raw": "{{stocks-service}}/stocks/2",
+									"raw": "{{stocks-service}}/stocks/1",
 									"host": [
 										"{{stocks-service}}"
 									],
 									"path": [
 										"stocks",
-										"2"
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get - Not Found",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{stocks-service}}/stocks/2000",
+									"host": [
+										"{{stocks-service}}"
+									],
+									"path": [
+										"stocks",
+										"2000"
 									]
 								}
 							},
@@ -146,6 +176,33 @@
 									"path": [
 										"stocks",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete - Not Found",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{stocks-service}}/stocks/2000",
+									"host": [
+										"{{stocks-service}}"
+									],
+									"path": [
+										"stocks",
+										"2000"
 									]
 								}
 							},
@@ -390,6 +447,10 @@
 		{
 			"key": "account_id",
 			"value": "1001"
+		},
+		{
+			"key": "execution_date",
+			"value": ""
 		}
 	]
 }
